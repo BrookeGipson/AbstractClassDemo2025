@@ -1,14 +1,14 @@
 package io.github.brookehgipson.dmvinfo;
 
-public class Vehicle {
-    private String vin;
-    private int manufactureYear;
-    private final VehicleTypes vehicletype;
+public abstract class Vehicle {
+    private final String vin;
+    private final int manufactureYear;
+    private final VehicleTypes vehicleType;
 
-    public Vehicle(String vin, int manufactureYear, VehicleTypes VehicleType) {
+    public Vehicle(String vin, int manufactureYear, VehicleTypes vehicleType) {
         this.vin = vin;
         this.manufactureYear = manufactureYear;
-        this.vehicletype = VehicleType;
+        this.vehicleType = vehicleType;
     }
 
     public String getVin() {
@@ -19,13 +19,27 @@ public class Vehicle {
         return manufactureYear;
     }
 
+    public VehicleTypes getVehicleType() {
+        return vehicleType;
+    }
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Vehicle Information & Details");
-        sb.append("\t").append("VIN: ").append(vin).append("\n");
-        sb.append("\t").append("Manufacture Year: ").append(manufactureYear).append("\n");
-        sb.append("\t").append("Vehicle Type: ").append(vehicletype).append("\n");
+        sb.append("Vehicle Information:\n");
+        sb.append("VIN: ").append(vin).append("\n");
+        sb.append("Manufacture Year: ").append(manufactureYear).append("\n");
+        sb.append(vehicleType);
         return sb.toString();
+    }
 
+    protected int toString(int tabLevel, StringBuilder sb) {
+        String tabs = "\t".repeat(tabLevel);
+        sb.append(tabs).append("Vehicle Information:\n");
+        String newtabs = "\t".repeat(tabLevel + 1);
+        String newTabs = "\t".repeat(tabLevel + 2);
+        sb.append(newtabs).append("VIN: ").append(vin).append("\n");
+        sb.append(newtabs).append("Manufacture Year: ").append(manufactureYear).append("\n");
+        sb.append(newTabs).append("Vehicle Type: ").append(vehicleType.getDisplayName()).append("\n");
+        return tabLevel + 1;
     }
 }
